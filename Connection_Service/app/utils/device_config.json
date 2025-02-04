@@ -1,0 +1,7 @@
+{
+    "device_id": "teddy-bear-1234",
+    "wifi_ssid": "MyWiFiNetwork",
+    "wifi_password": "MySecurePassword",
+    "mqtt_broker": "mqtt.example.com",
+    "grpc_server": "asr_service:50051"
+}

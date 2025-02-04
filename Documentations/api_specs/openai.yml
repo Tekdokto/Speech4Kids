@@ -1,0 +1,58 @@
+# Contents of `api_specs/openapi.yml`
+```yaml
+openapi: 3.0.0
+info:
+  title: Speech4Kids API
+  version: 1.0.0
+  description: API definitions for the Speech4Kids platform.
+servers:
+  - url: https://api.speech4kids.com/v1
+    description: Production server
+  - url: http://localhost:8000
+    description: Local development server
+paths:
+  /transcribe:
+    post:
+      summary: Transcribe audio to text
+      operationId: transcribeAudio
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TranscriptionRequest'
+      responses:
+        200:
+          description: Successful transcription
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TranscriptionResponse'
+        400:
+          description: Bad Request
+        500:
+          description: Internal Server Error
+components:
+  schemas:
+    TranscriptionRequest:
+      type: object
+      properties:
+        audio_data:
+          type: string
+          format: base64
+          description: Base64 encoded audio data
+      required:
+        - audio_data
+    TranscriptionResponse:
+      type: object
+      properties:
+        transcription:
+          type: string
+          description: Transcribed text
+        confidence:
+          type: number
+          format: float
+          description: Confidence score of the transcription
+```
+
+---

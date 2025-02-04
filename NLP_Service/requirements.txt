@@ -1,0 +1,8 @@
+## File: requirements.txt
+```plaintext
+fastapi==0.95.2
+uvicorn==0.22.0
+openai==0.27.8
+pydantic==1.10.7
+pytest==7.3.0
+```

@@ -1,0 +1,10 @@
+#### filebeat/filebeat.yml
+```yaml
+filebeat.inputs:
+  - type: log
+    paths:
+      - /var/log/*.log
+
+output.elasticsearch:
+  hosts: ["elasticsearch:9200"]
+```

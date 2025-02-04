@@ -1,0 +1,39 @@
+### 2. CircleCI: `config.yml`
+
+```yaml
+version: 2.1
+
+defaults:
+  working_directory: ~/project
+
+executors:
+  python-executor:
+    docker:
+      - image: circleci/python:3.10
+    working_directory: ~/project
+
+jobs:
+  build:
+    executor: python-executor
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            python -m pip install --upgrade pip
+            pip install -r requirements.txt
+
+      - run:
+          name: Run Tests
+          command: pytest --junitxml=results.xml
+
+      - store_artifacts:
+          path: results.xml
+          destination: test-results
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build
+```

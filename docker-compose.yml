@@ -1,0 +1,62 @@
+### Docker-Compose File
+
+version: '3.8'
+services:
+  gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    container_name: speech4kids_gateway
+    ports:
+      - "8000:8000"
+    environment:
+      - LOG_LEVEL=INFO
+      - CONFIG_PATH=/app/config/settings.py
+    depends_on:
+      - asr_service
+      - tts_service
+      - nlp_service
+    volumes:
+      - ./gateway:/app
+    networks:
+      - speech4kids_network
+
+  asr_service:
+    build:
+      context: ./asr_service
+      dockerfile: Dockerfile
+    container_name: speech4kids_asr
+    ports:
+      - "8001:8000"
+    environment:
+      - LOG_LEVEL=INFO
+    networks:
+      - speech4kids_network
+
+  tts_service:
+    build:
+      context: ./tts_service
+      dockerfile: Dockerfile
+    container_name: speech4kids_tts
+    ports:
+      - "8002:8000"
+    environment:
+      - LOG_LEVEL=INFO
+    networks:
+      - speech4kids_network
+
+  nlp_service:
+    build:
+      context: ./nlp_service
+      dockerfile: Dockerfile
+    container_name: speech4kids_nlp
+    ports:
+      - "8003:8000"
+    environment:
+      - LOG_LEVEL=INFO
+    networks:
+      - speech4kids_network
+
+networks:
+  speech4kids_network:
+    driver: bridge

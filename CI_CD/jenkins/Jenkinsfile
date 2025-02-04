@@ -1,0 +1,49 @@
+### 3. Jenkins: `Jenkinsfile`
+
+```groovy
+pipeline {
+    agent any
+
+    environment {
+        PYTHON_ENV = "python3.10"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh "${PYTHON_ENV} -m pip install --upgrade pip"
+                sh "${PYTHON_ENV} -m pip install -r requirements.txt"
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                sh "pytest --junitxml=results.xml"
+            }
+
+            post {
+                always {
+                    junit 'results.xml'
+                }
+            }
+        }
+
+        stage('Deploy to Staging') {
+            when {
+                branch 'main'
+            }
+
+            steps {
+                sh "echo Deploying application to staging..."
+                // Add deployment scripts here
+            }
+        }
+    }
+}
+```

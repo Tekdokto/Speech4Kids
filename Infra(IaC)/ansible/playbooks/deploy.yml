@@ -1,0 +1,34 @@
+#### 2. Ansible Directory
+
+**`ansible/playbooks/deploy.yml`**
+
+---
+- name: Deploy Speech4Kids Services
+  hosts: all
+  tasks:
+    - name: Install Docker
+      ansible.builtin.yum:
+        name: docker
+        state: present
+
+    - name: Start Docker service
+      ansible.builtin.service:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: Pull service images
+      ansible.builtin.shell: |
+        docker pull {{ item.image }}
+      with_items:
+        - { image: "speech4kids/gateway:latest" }
+        - { image: "speech4kids/asr_service:latest" }
+        - { image: "speech4kids/tts_service:latest" }
+
+    - name: Run services
+      ansible.builtin.shell: |
+        docker run -d --name {{ item.name }} -p {{ item.port }}:{{ item.port }} {{ item.image }}
+      with_items:
+        - { name: "gateway", port: 8000, image: "speech4kids/gateway:latest" }
+        - { name: "asr_service", port: 8001, image: "speech4kids/asr_service:latest" }
+        - { name: "tts_service", port: 8002, image: "speech4kids/tts_service:latest" }
