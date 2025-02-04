@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 ### README.md
 markdown
 # Speech4Kids Microservices
@@ -24,7 +24,7 @@ Speech4Kids is a distributed, microservices-based application for interactive, A
 ## Getting Started
 
 ### 1. Clone the Repository
-git clone https://github.com/your-repo/speech4kids.git
+git clone https://github.com/your-repo/Speech4Kids.git
 cd speech4kids
 
 ### 2. Build and Start Services
