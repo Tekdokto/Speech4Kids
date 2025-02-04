@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ### README.md
 markdown
 # Speech4Kids Microservices
